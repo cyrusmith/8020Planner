@@ -4,10 +4,12 @@
   margin: 0;
   padding: 1em;
 }
-.todos-list .todo-item {
-  cursor: move;
+.todos-list li {
   list-style-type: none;
   padding: .2em;
+}
+.todos-list li.todo-item {
+  cursor: move;
   border: 1px solid #999999;
   border-radius: 4px;
   margin-bottom: .5em;

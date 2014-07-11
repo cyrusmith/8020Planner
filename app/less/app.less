@@ -3,14 +3,17 @@
   border: 1px solid #aaa;
   margin: 0;
   padding: 1em;
-  .todo-item {
-    cursor: move;
+  li {
     list-style-type: none;
     padding: .2em;
-    border: 1px solid #999999;
-    border-radius: 4px;
-    margin-bottom: .5em;
-    background-color: #0b97c4;
-    color: #FFF;
+    &.todo-item {
+      cursor: move;
+      border: 1px solid #999999;
+      border-radius: 4px;
+      margin-bottom: .5em;
+      background-color: #0b97c4;
+      color: #FFF;
+    }
+
   }
 }

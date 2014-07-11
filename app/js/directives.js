@@ -16,10 +16,6 @@ angular.module('myApp.directives', []).
             },
             link: function (scope, elm, attrs) {
                 elm.addClass('todo-item');
-                elm.draggable({
-                    cursor: "move",
-                    revert: true
-                });
                 elm.data('todo', scope.todo);
             },
             template: '{{todo.title}} {{todo.id}}'
@@ -29,17 +25,30 @@ angular.module('myApp.directives', []).
             restrict: 'A',
             scope: {
                 "todosSource": "=",
-                "onDrop": "&"
+                "onSort": "&"
             },
             link: function (scope, elm, attrs) {
+
                 elm.addClass('todos-list');
-                elm.droppable({
-                    drop: function (event, ui) {
-                        scope.onDrop({todo: ui.draggable.data().todo});
-                        scope.$apply();
+                elm.sortable({
+                    placeholder: "ui-state-highlight",
+                    connectWith: ".todos-list",
+                    forcePlaceholderSize: true,
+                    revert: true,
+                    update: function (evt, ui) {
+
+                        var htmlIds = elm.sortable("toArray");
+                        var ids = [];
+                        for (var i = 0; i < htmlIds.length; i++) {
+                            ids.push(htmlIds[i].replace(/^todo-/, ''));
+                        }
+                        console.log("update", htmlIds, ids);
+
+                        scope.onSort({ids: ids});
+
                     }
                 });
             },
-            template: '<li ng-repeat="todo in todosSource" todo="todo" todo-item/>'
+            template: '<li ng-repeat="todo in todosSource" todo="todo" id="todo-{{todo.id}}" todo-item/>'
         }
     });

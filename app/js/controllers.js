@@ -4,53 +4,87 @@
 
 angular.module('myApp.controllers', [])
     .controller('MainController', ['$scope', function ($scope) {
-        $scope.todos = [
-            {
-                id: 1,
-                title: 'Save the world'
-            },
-            {
-                id: 2,
-                title: 'Kill Bill'
-            }
-        ];
 
-        $scope.todays = [
-            {
-                id: 3,
-                title: 'Save the world'
-            }
-        ];
+        function Task(id, title) {
+            this.id = id;
+            this.title = title;
+            this.isToday = false;
+            this.isComplete = false;
+        }
 
-        function findTodo(list, todo) {
-            for (var i = 0; i < list.length; i++) {
-                if (todo.id == list[i].id) {
-                    return i;
+        Task.prototype.setToday = function (isToday) {
+            this.isToday = true;
+            return this;
+        }
+
+        Task.prototype.setComplete = function () {
+            if (this.isToday) {
+                this.isComplete = true;
+            }
+            return this;
+        }
+
+        function TaskList() {
+            this.__hash = {};
+            this.__items = [];
+        }
+
+        TaskList.prototype.append = function (todo) {
+            if (!(todo instanceof Task)) throw "Illegal argument";
+            if (!this.__hash.hasOwnProperty(todo.id)) {
+                this.__hash[todo.id] = todo;
+                this.__items.push(todo);
+            }
+        }
+
+        TaskList.prototype.getTasks = function () {
+            return this.__items;
+        }
+
+        TaskList.prototype.update = function (tasks) {
+
+            this.__hash = {};
+            this.__items = [];
+
+            for (var i = 0; i < tasks.length; i++) {
+                this.__hash[tasks[i].id] = tasks[i];
+                this.__items.push(tasks[i]);
+            }
+        }
+
+        $scope.tasks = {};
+        $scope.tasks["1"] = new Task("1", "Todo 1");
+        $scope.tasks["2"] = new Task("2", "Todo 2");
+        $scope.tasks["3"] = new Task("3", "Todo 3").setToday(true);
+
+        $scope.backlog = new TaskList();
+        $scope.todays = new TaskList();
+
+        function configBoard() {
+            for (var id in $scope.tasks) {
+                if ($scope.tasks.hasOwnProperty(id)) {
+                    $scope.tasks[id].isToday ? $scope.todays.append($scope.tasks[id]) : $scope.backlog.append($scope.tasks[id]);
                 }
             }
-            return -1;
         }
 
-        $scope.onAddTodo = function (todo) {
+        configBoard();
 
-            if (findTodo($scope.todos, todo) == -1) {
-                $scope.todos.push(todo);
+        $scope.onUpdateBacklog = function (ids) {
+            console.log("onUpdateBacklog", ids);
+            var tasks = [];
+            for (var i = 0; i < ids.length; i++) {
+                tasks.push($scope.tasks[ids[i]].setToday(false));
             }
-
-            var fromIdx = findTodo($scope.todays, todo);
-            if (fromIdx !== -1) {
-                $scope.todays.splice(fromIdx, 1);
-            }
+            $scope.backlog.update(tasks);
         }
 
-        $scope.onAddToday = function (todo) {
-            if (findTodo($scope.todays, todo) == -1) {
-                $scope.todays.push(todo);
+        $scope.onUpdateToday = function (ids) {
+            console.log("onUpdateToday", ids);
+            var tasks = [];
+            for (var i = 0; i < ids.length; i++) {
+                tasks.push($scope.tasks[ids[i]].setToday(true));
             }
-
-            var fromIdx = findTodo($scope.todos, todo);
-            if (fromIdx !== -1) {
-                $scope.todos.splice(fromIdx, 1);
-            }
+            $scope.todays.update(tasks);
         }
     }]);

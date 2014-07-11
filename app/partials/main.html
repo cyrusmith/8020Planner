@@ -1,20 +1,20 @@
 <div class="row">
 
-    <div class="col-sm-offset-1 col-sm-2">
+    <div class="col-lg-offset-1 col-lg-5">
 
-        <h2>TODOs</h2>
+        <h2>TODOs {{backlog.getTasks().length}}</h2>
 
         <button>&plus; Добавить</button>
-        <ul todos-list todos-source="todos" on-drop="onAddTodo(todo)" />
+        <ul todos-list todos-source="backlog.getTasks()" on-sort="onUpdateBacklog(ids)" />
 
     </div>
 
-    <div class="col-sm-offset-1 col-sm-2">
+    <div class="col-lg-offset-1 col-lg-4">
 
-        <h2>Today</h2>
+        <h2>Today {{todays.getTasks().length}}</h2>
 
         <button>&plus; Добавить</button>
-        <ul todos-list todos-source="todays" on-drop="onAddToday(todo)"/>
+        <ul todos-list todos-source="todays.getTasks()" on-sort="onUpdateToday(ids)"/>
 
     </div>
 
