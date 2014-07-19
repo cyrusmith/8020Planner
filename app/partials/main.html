@@ -2,20 +2,27 @@
 
     <div class="col-lg-offset-1 col-lg-5">
 
-        <h2>TODOs {{backlog.getTasks().length}}</h2>
-
+        <h2>TODOs {{backlog.length}}</h2>
         <button>&plus; Добавить</button>
-        <ul todos-list todos-source="backlog.getTasks()" on-sort="onUpdateBacklog(ids)" />
+        <ul ui-sortable="sortableOptionsBacklog" ng-model="backlog" class="task-list backlog-tasks" data-taskstate="{{states.backlog}}">
+            <li id="{{task.id}}" ng-repeat="task in backlog">#{{task.id}} {{task.title}}</li>
+        </ul>
 
     </div>
 
     <div class="col-lg-offset-1 col-lg-4">
 
-        <h2>Today {{todays.getTasks().length}}</h2>
+        <h2>Today {{todo.length}}</h2>
 
         <button>&plus; Добавить</button>
-        <ul todos-list todos-source="todays.getTasks()" on-sort="onUpdateToday(ids)"/>
+
+        <ul ui-sortable="sortableOptionsTodo" ng-model="todo" class="task-list todo-tasks" data-taskstate="{{states.todo}}">
+            <li id="{{task.id}}" ng-repeat="task in todo">#{{task.id}} {{task.title}}</li>
+        </ul>
 
     </div>
 
+
 </div>
+
+<div ng-repeat="task in tasks">{{task | json}}</div>

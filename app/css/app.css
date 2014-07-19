@@ -1,14 +1,12 @@
-.todos-list {
+.task-list {
   min-height: 2em;
   border: 1px solid #aaa;
   margin: 0;
   padding: 1em;
 }
-.todos-list li {
+.task-list li {
   list-style-type: none;
   padding: .2em;
-}
-.todos-list li.todo-item {
   cursor: move;
   border: 1px solid #999999;
   border-radius: 4px;
