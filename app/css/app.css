@@ -1,16 +1,44 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 .task-list {
   min-height: 2em;
-  border: 1px solid #aaa;
-  margin: 0;
+  border: 1px solid #ddd;
+  margin: .5em 0;
   padding: 1em;
+  -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 0.2em;
+  -moz-border-radius: 0.2em;
+  border-radius: 0.2em;
 }
 .task-list li {
   list-style-type: none;
-  padding: .2em;
+  padding: .5em;
+  border: 1px solid #000;
   cursor: move;
   border: 1px solid #999999;
-  border-radius: 4px;
+  border-radius: 1em;
   margin-bottom: .5em;
   background-color: #0b97c4;
   color: #FFF;
+}
+.task-list li a {
+  color: #FFF;
+  font-weight: bold;
+  float: right;
+  padding: .2em 0;
+  width: 1.8em;
+  position: relative;
+  top: -0.2em;
+  text-align: center;
+  border-radius: 1em;
+  background: #F00;
+}
+.task-list.todo-tasks li {
+  background-color: #339911;
 }

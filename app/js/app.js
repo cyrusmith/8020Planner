@@ -8,7 +8,8 @@ angular.module('8020Planner', [
         '8020Planner.services',
         '8020Planner.directives',
         '8020Planner.controllers',
-        'ui.sortable'
+        'ui.sortable',
+        'ui.keypress'
     ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/main.html', controller: 'MainController'});

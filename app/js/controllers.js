@@ -15,9 +15,29 @@ angular.module('8020Planner.controllers', [])
         Task.STATE_TODO = 2;
         Task.STATE_COMPLETE = 3;
 
+        $scope.states = {
+            "backlog": Task.STATE_BACKLOG,
+            "todo": Task.STATE_TODO,
+            "complete": Task.STATE_COMPLETE
+        };
+
+        $scope.tasks = [];
+        $scope.backlog = [];
+        $scope.todo = [];
+
+        function updateLists() {
+            $scope.backlog = $filter('filter')($scope.tasks, {
+                state: Task.STATE_BACKLOG
+            });
+
+            $scope.todo = $filter('filter')($scope.tasks, {
+                state: Task.STATE_TODO
+            });
+        }
+
         var sortableOptionsCommon = {
             placeholder: "task-ph",
-            start: function(event, ui){
+            start: function (event, ui) {
 
             },
             beforeStop: function (evt, ui) {
@@ -35,24 +55,7 @@ angular.module('8020Planner.controllers', [])
             }
         };
 
-        $scope.states = {
-            "backlog": Task.STATE_BACKLOG,
-            "todo": Task.STATE_TODO,
-            "complete": Task.STATE_COMPLETE
-        };
-
-        $scope.tasks = [];
-        $scope.tasks.push(new Task(1, "Save the world", Task.STATE_BACKLOG));
-        $scope.tasks.push(new Task(2, "Buy the bread", Task.STATE_BACKLOG));
-        $scope.tasks.push(new Task(3, "Kill Bill", Task.STATE_BACKLOG));
-
-        $scope.backlog = $filter('filter')($scope.tasks, {
-            state: Task.STATE_BACKLOG
-        });
-
-        $scope.todo = $filter('filter')($scope.tasks, {
-            state: Task.STATE_TODO
-        });
+        updateLists();
 
         $scope.sortableOptionsBacklog = angular.extend(sortableOptionsCommon, {
             connectWith: '.task-list'
@@ -62,5 +65,48 @@ angular.module('8020Planner.controllers', [])
             connectWith: '.task-list'
         });
 
+        $scope.onAddBacklog = function () {
+            if ($scope.newTaskTitle) {
+                $scope.tasks.push(new Task($scope.tasks.length + 1, $scope.newTaskTitle, Task.STATE_BACKLOG));
+            }
+            $scope.isAddBacklogVisible = false;
+            $scope.newTaskTitle = "";
+
+            $scope.backlog = $filter('filter')($scope.tasks, {
+                state: Task.STATE_BACKLOG
+            });
+
+            $scope.todo = $filter('filter')($scope.tasks, {
+                state: Task.STATE_TODO
+            });
+
+        }
+
+        $scope.onAddTodo = function () {
+            if ($scope.newTaskTitle) {
+                $scope.tasks.push(new Task($scope.tasks.length + 1, $scope.newTaskTitle, Task.STATE_TODO));
+            }
+            $scope.isAddTodoVisible = false;
+            $scope.newTaskTitle = "";
+
+            $scope.backlog = $filter('filter')($scope.tasks, {
+                state: Task.STATE_BACKLOG
+            });
+
+            $scope.todo = $filter('filter')($scope.tasks, {
+                state: Task.STATE_TODO
+            });
+
+        }
+
+        $scope.removeTask = function (task) {
+            for (var i = 0; i < $scope.tasks.length; i++) {
+                if (task.id == $scope.tasks[i].id) {
+                    $scope.tasks.splice(i, 1);
+                    break;
+                }
+            }
+            updateLists();
+        }
 
     }]);
