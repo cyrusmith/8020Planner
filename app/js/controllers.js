@@ -13,17 +13,20 @@ angular.module('8020Planner.controllers', [])
 
         Task.STATE_BACKLOG = 1;
         Task.STATE_TODO = 2;
-        Task.STATE_COMPLETE = 3;
+        Task.STATE_TODO_UNIMPORTANT = 3;
+        Task.STATE_COMPLETE = 4;
 
         $scope.states = {
             "backlog": Task.STATE_BACKLOG,
             "todo": Task.STATE_TODO,
+            "todoUnimp": Task.STATE_TODO_UNIMPORTANT,
             "complete": Task.STATE_COMPLETE
         };
 
         $scope.tasks = [];
         $scope.backlog = [];
         $scope.todo = [];
+        $scope.todoUnimp = [];
 
         function updateLists() {
             $scope.backlog = $filter('filter')($scope.tasks, {
@@ -32,6 +35,10 @@ angular.module('8020Planner.controllers', [])
 
             $scope.todo = $filter('filter')($scope.tasks, {
                 state: Task.STATE_TODO
+            });
+
+            $scope.todoUnimp = $filter('filter')($scope.tasks, {
+                state: Task.STATE_TODO_UNIMPORTANT
             });
         }
 
@@ -72,30 +79,18 @@ angular.module('8020Planner.controllers', [])
             $scope.isAddBacklogVisible = false;
             $scope.newTaskTitle = "";
 
-            $scope.backlog = $filter('filter')($scope.tasks, {
-                state: Task.STATE_BACKLOG
-            });
-
-            $scope.todo = $filter('filter')($scope.tasks, {
-                state: Task.STATE_TODO
-            });
+            updateLists();
 
         }
 
         $scope.onAddTodo = function () {
             if ($scope.newTaskTitle) {
-                $scope.tasks.push(new Task($scope.tasks.length + 1, $scope.newTaskTitle, Task.STATE_TODO));
+                $scope.tasks.push(new Task($scope.tasks.length + 1, $scope.newTaskTitle, Task.STATE_TODO_UNIMPORTANT));
             }
             $scope.isAddTodoVisible = false;
             $scope.newTaskTitle = "";
 
-            $scope.backlog = $filter('filter')($scope.tasks, {
-                state: Task.STATE_BACKLOG
-            });
-
-            $scope.todo = $filter('filter')($scope.tasks, {
-                state: Task.STATE_TODO
-            });
+            updateLists();
 
         }
 

@@ -1,28 +1,43 @@
 <div class="row">
 
     <div class="col-lg-offset-1 col-lg-5">
-
-        <h2>Backlog</h2>
-        <button ng-click="isAddBacklogVisible = true">&plus; Добавить</button>
-        <input type="text" ui-keypress="{13: 'onAddBacklog()'}" ng-model="newTaskTitle" ng-show="isAddBacklogVisible"/>
-        <ul ui-sortable="sortableOptionsBacklog" ng-model="backlog" class="task-list backlog-tasks"
-            data-taskstate="{{states.backlog}}">
-            <li id="{{task.id}}" ng-repeat="task in backlog">#{{task.id}} {{task.title}}<a href="" ng-click="removeTask(task)">&cross;</a></li>
-        </ul>
+        <div class="block">
+            <h2>Копилка</h2>
+            <button ng-click="isAddBacklogVisible = true">&plus; Добавить</button>
+            <input type="text" ui-keypress="{13: 'onAddBacklog()'}" ng-model="newTaskTitle"
+                   ng-show="isAddBacklogVisible"/>
+            <ul ui-sortable="sortableOptionsBacklog" ng-model="backlog" class="task-list backlog-tasks"
+                data-taskstate="{{states.backlog}}">
+                <li id="{{task.id}}" ng-repeat="task in backlog">#{{task.id}} {{task.title}}<a href=""
+                                                                                               ng-click="removeTask(task)">&cross;</a>
+                </li>
+            </ul>
+        </div>
 
     </div>
 
     <div class="col-lg-offset-1 col-lg-4">
 
-        <h2>Today</h2>
+        <div class="block">
 
-        <button ng-click="isAddTodoVisible = true">&plus; Добавить</button>
-        <input type="text" ui-keypress="{13: 'onAddTodo()'}" ng-model="newTaskTitle" ng-show="isAddTodoVisible"/>
-        <ul ui-sortable="sortableOptionsTodo" ng-model="todo" class="task-list todo-tasks"
-            data-taskstate="{{states.todo}}">
-            <li id="{{task.id}}" ng-repeat="task in todo">#{{task.id}} {{task.title}}<a href="" ng-click="removeTask(task)">&cross;</a></li>
-        </ul>
+            <h2>Сделать</h2>
 
+            <button ng-click="isAddTodoVisible = true">&plus; Добавить</button>
+            <input type="text" ui-keypress="{13: 'onAddTodo()'}" ng-model="newTaskTitle" ng-show="isAddTodoVisible"/>
+            <ul ui-sortable="sortableOptionsTodo" ng-model="todo" class="task-list todo-tasks"
+                data-taskstate="{{states.todo}}">
+                <li id="{{task.id}}" ng-repeat="task in todo">#{{task.id}} {{task.title}}<a href=""
+                                                                                            ng-click="removeTask(task)">&cross;</a>
+                </li>
+            </ul>
+
+            <ul ui-sortable="sortableOptionsTodo" ng-model="todoUnimp" class="task-list todounimp-tasks"
+                data-taskstate="{{states.todoUnimp}}">
+                <li id="{{task.id}}" ng-repeat="task in todoUnimp">#{{task.id}} {{task.title}}<a href=""
+                                                                                            ng-click="removeTask(task)">&cross;</a>
+                </li>
+            </ul>
+        </div>
     </div>
 
 

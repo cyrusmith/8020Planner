@@ -4,7 +4,7 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
-.task-list {
+.block .task-list {
   min-height: 2em;
   border: 1px solid #ddd;
   margin: .5em 0;
@@ -15,8 +15,9 @@
   -webkit-border-radius: 0.2em;
   -moz-border-radius: 0.2em;
   border-radius: 0.2em;
+  margin-bottom: 2em;
 }
-.task-list li {
+.block .task-list li {
   list-style-type: none;
   padding: .5em;
   border: 1px solid #000;
@@ -27,7 +28,7 @@
   background-color: #0b97c4;
   color: #FFF;
 }
-.task-list li a {
+.block .task-list li a {
   color: #FFF;
   font-weight: bold;
   float: right;
@@ -39,6 +40,12 @@
   border-radius: 1em;
   background: #F00;
 }
-.task-list.todo-tasks li {
+.block .task-list.todo-tasks li {
   background-color: #339911;
+}
+.block .task-list.todounimp-tasks {
+  background-color: #FF9;
+}
+.block .task-list.todounimp-tasks li {
+  background-color: #888800;
 }
